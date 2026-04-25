@@ -45,18 +45,21 @@ polish: Thanks for your help
 ## 示例：`word: mosquito`
 
 ```text
-Word/Phrase: mosquito
+Word: mosquito
 CEFR: B1
-IPA: /məˈskiː.toʊ/ (US)
+IPA: /məˈskiː.toʊ/ US · /mɒˈskiː.təʊ/ UK
 Part of speech: noun
 Meaning: a small flying insect that bites people and animals
-中文：蚊子
+中文: 蚊子
+
 Simpler ladder: bug → insect → mosquito
-Collocations: mosquito bite · mosquito net · mosquito repellent
+
+Collocations: mosquito bite · mosquito net · mosquito repellent · mosquitoes buzz
+
 Examples:
-1. A1: A bug bit me.
-2. A2: A mosquito bit me.
-3. B1: There are mosquitoes near the water.
+1. A mosquito bit me.
+2. There are mosquitoes near the water.
+3. Use mosquito repellent.
 ```
 
 ### MP3 发音

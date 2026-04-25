@@ -84,5 +84,25 @@ hermes config set image_gen.model gpt-image-2-medium
 | `word: mosquito repellent` | 短语卡 |
 | `words: paste an English paragraph here` | 从一段英文里挑重点词 |
 | `say: how are you doing?` | 发音、重音、跟读 |
-| `fix: I goed to store` | 纠错 |
-| `polish: Thanks for your help` | 润色 |
+| `fix: I goed to store` | 小改进式纠错：先给 **Little better** |
+| `polish: Thanks for your help` | 先 Little better，再给更自然版本 |
+
+## `fix:` / `polish:` 的 Little better
+
+**Little better** = 小改原句，让它更正确、更清楚，但尽量保留用户自己的表达。
+
+- `fix:` 默认先给 **Little better**：修明显错误，不急着改成完美母语句。
+- `polish:` 先给 **Little better**，再给 **More natural** / **Best version**。
+- 目的：让学习者更容易看懂「改了哪里」，从小变化里学会表达。
+
+```text
+fix: I call it "little better", changing theoriginal a little so that users can much easier to grasp.
+```
+
+```text
+Little better:
+I call it "a little better": changing the original a little so users can grasp it much more easily.
+
+More natural:
+I call it “a little better”: a small change to the original that makes it much easier for learners to understand.
+```

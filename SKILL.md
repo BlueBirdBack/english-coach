@@ -155,14 +155,22 @@ Evaluate two axes:
 - **Grammar** — correct or not
 - **Naturalness** — native-like or awkward/stiff
 
+Little better principle:
+- **Little better** means a small, learner-friendly upgrade: change the original as little as possible while making it clearer, more correct, and easier to understand.
+- Preserve the user's wording, style, tone, and sentence shape unless they block correctness.
+- Do not jump straight to a perfect native rewrite when the learner needs to see the small delta.
+- For `fix:`, **Little better** is the default answer.
+- For `polish:`, show **Little better** first, then a stronger **More natural** or **Best version** when useful.
+
 Output:
 - **Verdict:** ✅ correct & natural / ⚠️ grammar issue / ⚠️ unnatural / ❌ both
-- **Best version:** corrected or polished sentence
-- **Changes:** short bullets
+- **Little better:** minimal corrected/improved version that stays close to the original
+- **More natural** or **Best version:** stronger rewrite, mainly for `polish:` or when the user asks for native phrasing
+- **Changes:** short bullets comparing the original with **Little better**
 - **Variants:** casual / professional / polite / direct only when useful
 - **Simpler alternatives:** if B2+ wording can be simplified without losing meaning
 
-For short messages, usually return only **Best**, **Changes**, and one optional variant.
+For short messages, usually return only **Little better**, **Changes**, and one optional **More natural** version.
 
 ## Media behavior
 
@@ -216,7 +224,7 @@ What to read aloud:
 | `word: resilience` | CEFR + IPA + examples |
 | `words: [paragraph]` | Living Vocab list |
 | `say: I worked it out` | stress/rhythm/shadowing |
-| `fix: I goed to store` | correction + natural version |
-| `polish: Thanks for your help` | clearer tone-matched rewrite |
+| `fix: I goed to store` | Little better correction that stays close to the original |
+| `polish: Thanks for your help` | Little better + more natural tone-matched rewrite |
 
 Audio is default in Hermes when available; text-only fallback is valid in public/non-Hermes installs.

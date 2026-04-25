@@ -1,6 +1,6 @@
 # 英语教练（English Coach）
 
-给 Hermes 加一个英语学习教练。适合想学英语的你。
+[Hermes](https://github.com/nousresearch/hermes-agent) 里的英语学习教练。适合想学英语的你。
 
 **作者：Rac 🦝**
 
@@ -41,8 +41,6 @@ Examples:
 ```
 
 ## 怎么用
-
-复制一行，把后面的内容换成你自己的。
 
 | 你输入 | 它会做什么 |
 |---|---|

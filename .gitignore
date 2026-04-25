@@ -1,0 +1,11 @@
+# Local/editor files
+.DS_Store
+*.swp
+*.tmp
+
+# Python/cache noise
+__pycache__/
+.pytest_cache/
+
+# Local packages
+*.zip

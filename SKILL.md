@@ -72,6 +72,12 @@ Required local references:
 
 Use EFLLex for word-level lookup. Do not load the full TSV into chat context. If a word is missing, estimate the level without mentioning EFLLex.
 
+Phrase CEFR policy:
+- EFLLex is word-level, not phrase-level.
+- For phrases/collocations, use the component words as evidence, then estimate the phrase's practical teaching level.
+- If component levels conflict or the phrase is not directly in the data, avoid false precision: use `CEFR: B2 (estimated)` or a range like `B2–C1`.
+- Common practical phrases can be easier than their hardest component word, but note this briefly when relevant.
+
 Accept words, phrases, idioms, collocations, and short texts. For text, extract up to **8** useful B1+ items by default.
 
 Single item format:
@@ -85,9 +91,9 @@ Meaning: Seems reasonable or likely to be true
 Simpler ladder: possible (A1) → likely (B1) → believable (B1)
 Collocations: plausible explanation · plausible reason · plausible theory
 Examples:
-1. A2: "That idea is possible."
-2. B1: "That sounds like a likely reason."
-3. B2: "That sounds like a plausible explanation."
+1. "The story sounds plausible."
+2. "That is a plausible explanation."
+3. "It is plausible that the plan will work."
 ```
 
 Living Vocab list format for text:
@@ -100,6 +106,9 @@ Vocabulary rules:
 - Explain whole phrases/idioms, not each word separately.
 - Prefer simpler synonyms that reduce CEFR by at least one level.
 - If the target is already A1–B1, use same-level or lower-level synonyms.
+- Keep `Simpler ladder` separate from `Examples`.
+- Under `Examples`, every sentence must use the target word/phrase or a natural inflected form. Do not put synonym-only sentences there.
+- For phrases/collocations, include the full phrase in examples unless a shortened repeat is clearly natural.
 - Note polysemy when level depends on meaning, e.g. `fair` adjective vs noun.
 - Default IPA: US; add UK when pronunciation differs or user asks.
 

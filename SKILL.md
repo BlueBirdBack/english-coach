@@ -1,6 +1,6 @@
 ---
 name: english-coach
-description: "English Coach: English learning coach for translation, word cards, pronunciation, correction, polishing, optional audio, and flashcard images. Primary triggers: en: zh: word: words: say: fix: polish:. Also supports: ipa: idiom: collocation: speak: shadow: check: correct: proofread: translate: 翻译:. Legacy trigger aliases: lv: level: vocab: pronounce:."
+description: "English Coach: English learning coach for translation, term origins, word cards, pronunciation, correction, polishing, optional audio, and flashcard images. Primary triggers: en: zh: word: words: say: fix: polish:. Also supports: term: etymology: origin: ipa: idiom: collocation: speak: shadow: check: correct: proofread: translate: 翻译:. Legacy trigger aliases: lv: level: vocab: pronounce:."
 author: "Rac 🦝"
 ---
 
@@ -25,15 +25,17 @@ Built by Rac 🦝 from reusable English-learning patterns: Living Vocab, Spoken 
 Strict prefix routing:
 - If the user message begins with an English Coach trigger followed by `:`, that trigger wins over semantic/domain routing.
 - Treat everything after the first colon as the text payload for that mode, even if it mentions config, code, commands, GitHub, tools, URLs, or looks like a technical question.
+- If the trigger payload is empty in a messaging reply context, use the replied-to text as the payload instead of asking for clarification. Example: replying `say:` to a previous polish result means pronounce the best/natural sentence from that result.
 - Do not answer the payload as a domain question unless the user asks again without an English Coach trigger.
-- Apply this rule to primary and alias triggers, including `polish:`, `fix:`, `check:`, `correct:`, `proofread:`, `say:`, `pronounce:`, `shadow:`, `speak:`, `word:`, `words:`, `vocab:`, `lv:`, `level:`, `en:`, `translate:`, `zh:`, and `翻译:`.
+- Apply this rule to primary and alias triggers, including `polish:`, `fix:`, `check:`, `correct:`, `proofread:`, `say:`, `pronounce:`, `shadow:`, `speak:`, `word:`, `words:`, `vocab:`, `lv:`, `level:`, `term:`, `etymology:`, `origin:`, `en:`, `translate:`, `zh:`, and `翻译:`.
 
 When triggers overlap after prefix routing, use:
 
 1. Correction / polish
 2. Pronunciation / speaking
-3. Words / CEFR
-4. Translation
+3. Term origin / terminology
+4. Words / CEFR
+5. Translation
 
 Ask only if the request is genuinely ambiguous.
 
@@ -56,6 +58,30 @@ ZH→EN learner upgrade, when useful:
 - **Variants:** casual / professional / polite / concise when useful
 
 Watch for missing subjects, articles, connectors, tense, plurality, direct-translated idioms, and filler like “I want to say that.”
+
+## Term origin / terminology
+
+Triggers:
+- `term: agent`
+- `etymology: agent`
+- `origin: agent`
+- Natural questions like “Does agent come from agency?” or “What does X mean in AI?”
+
+Do:
+- Give the short truth first: yes / no / partly.
+- Distinguish **etymology** (word history) from **current meaning** and **field-specific usage**.
+- For AI/software terms, explain the ordinary-English meaning, the technical meaning, and a natural Chinese translation when useful.
+- If the user includes their own English sentence, also correct obvious learner errors briefly.
+- Keep it compact unless the user asks for sources or depth.
+
+Default format:
+```text
+Short answer: ...
+Why: ...
+In AI/software: ...
+Natural Chinese: ...
+Your sentence: ...
+```
 
 ## Words / CEFR / Living Vocab
 
@@ -225,6 +251,7 @@ What to read aloud:
 
 | Request | Result |
 |---|---|
+| `term: agent` | Explain word origin, current meaning, and AI/software usage |
 | `zh: Hello there` | EN→ZH translation |
 | `en: 你好` | ZH→EN natural English |
 | `word: resilience` | CEFR + IPA + examples |

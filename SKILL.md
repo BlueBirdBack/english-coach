@@ -22,7 +22,13 @@ Built by Rac 🦝 from reusable English-learning patterns: Living Vocab, Spoken 
 
 ## Mode priority
 
-When triggers overlap, use:
+Strict prefix routing:
+- If the user message begins with an English Coach trigger followed by `:`, that trigger wins over semantic/domain routing.
+- Treat everything after the first colon as the text payload for that mode, even if it mentions config, code, commands, GitHub, tools, URLs, or looks like a technical question.
+- Do not answer the payload as a domain question unless the user asks again without an English Coach trigger.
+- Apply this rule to primary and alias triggers, including `polish:`, `fix:`, `check:`, `correct:`, `proofread:`, `say:`, `pronounce:`, `shadow:`, `speak:`, `word:`, `words:`, `vocab:`, `lv:`, `level:`, `en:`, `translate:`, `zh:`, and `翻译:`.
+
+When triggers overlap after prefix routing, use:
 
 1. Correction / polish
 2. Pronunciation / speaking

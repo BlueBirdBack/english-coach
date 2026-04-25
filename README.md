@@ -87,6 +87,16 @@ hermes config set image_gen.model gpt-image-2-medium
 | `fix: I goed to store` | 小改进式纠错：先给 **Little better** |
 | `polish: Thanks for your help` | 先 Little better，再给更自然版本 |
 
+## 显式前缀优先
+
+如果一句话以 `polish:`、`fix:`、`word:`、`say:`、`en:`、`zh:` 等前缀开头，English Coach 会把冒号后面的内容当作学习材料处理，不会把它当成技术问题来回答。
+
+```text
+polish: what's the current config's max_turns and approvals.mode
+```
+
+这会触发润色，而不是去查询 Hermes 配置。想问技术问题时，不要加 English Coach 前缀。
+
 ## `fix:` / `polish:` 的 Little better
 
 **Little better** = 小改原句，让它更正确、更清楚，但尽量保留用户自己的表达。

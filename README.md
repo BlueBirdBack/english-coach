@@ -12,20 +12,14 @@
 - `words:` 从一段英文里提取值得学的词
 - `say:` 发音、重音、跟读
 - `fix:` 纠错
-- `polish:` 按语气润色
+- `polish:` 润色
 
-## 安装
+## 安装 / 更新
 
-把这个仓库克隆到 Hermes skills 目录：
-
-```bash
-git clone <repo-url> ~/.hermes/skills/openclaw-imports/english-coach
-```
-
-然后在 Hermes 里加载：
+把下面这句发给 Hermes：
 
 ```text
-english-coach
+请帮我安装或更新这个 skill：https://github.com/BlueBirdBack/english-coach
 ```
 
 ## 快速例子
@@ -77,10 +71,3 @@ references/EFLLex_NLP4J
 assets/audio/word-mosquito.mp3
 assets/images/word-mosquito.png
 ```
-
-## 设计原则
-
-- 先给文本结果。
-- 音频和图片是可选增强，不是硬依赖。
-- 私密内容、账号密码、法律/医疗文本、个人数据默认只走文本，不发给 TTS 或图片工具。
-- 单词图片用于帮助记忆，优先画场景，不做文字很多的卡片。

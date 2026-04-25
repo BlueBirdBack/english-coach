@@ -40,6 +40,23 @@ Examples:
 请帮我安装或更新这个 skill：https://github.com/BlueBirdBack/english-coach
 ```
 
+## 可选：开启图片生成
+
+文字、翻译、纠错、润色和发音都可以直接用；单词配图依赖 Hermes 的 `image_gen` 工具。
+
+如果遇到 `FAL_KEY environment variable not set`，说明当前 Hermes 还在走默认 FAL 图片后端。可以改用 Codex/ChatGPT OAuth 的 GPT Image 2：
+
+```bash
+hermes tools enable image_gen
+hermes login --provider openai-codex
+hermes config set image_gen.provider openai-codex
+hermes config set image_gen.model gpt-image-2-medium
+```
+
+然后开启新会话；如果是在 Telegram / Discord gateway 里用 Hermes，执行 `/restart`。
+
+也可以继续只用文本和 MP3；图片不可用时，Hermes 会给你一段可复用的图片 prompt。
+
 ## 怎么用
 
 | 你输入 | 它会做什么 |

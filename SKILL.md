@@ -175,6 +175,14 @@ When available and safe:
 Fallbacks:
 - If TTS is unavailable, skip audio.
 - If image generation is unavailable, include a reusable image prompt.
+- If image generation fails with `FAL_KEY environment variable not set`, explain that Hermes is still using the default FAL image backend. Suggest this Codex/ChatGPT OAuth setup:
+  ```bash
+  hermes tools enable image_gen
+  hermes login --provider openai-codex
+  hermes config set image_gen.provider openai-codex
+  hermes config set image_gen.model gpt-image-2-medium
+  ```
+  Then tell the user to start a new session, or run `/restart` in a messaging gateway. Alternative: set `FAL_KEY` to keep using FAL.
 - If content is sensitive/private, skip external media tools unless the user explicitly asks.
 
 What to read aloud:

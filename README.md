@@ -1,6 +1,6 @@
-# English Coach
+# 英语教练
 
-**English Coach** 是一个 Hermes 英语学习 skill，用来做翻译、单词卡、发音练习、纠错、润色，以及可选的 TTS 音频和单词图片。
+**英语教练**（English Coach）是一个 Hermes 英语学习 skill，用来做翻译、单词卡、发音练习、纠错、润色，以及可选的 TTS 音频和单词图片。
 
 **作者：Rac 🦝**
 

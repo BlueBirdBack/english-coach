@@ -1,18 +1,16 @@
-# 英语教练
+# 英语教练（English Coach）
 
-**英语教练**（English Coach）是一个 Hermes 英语学习 skill，用来做翻译、单词卡、发音练习、纠错、润色，以及可选的 TTS 音频和单词图片。
+给 Hermes 加一个英语学习教练。你可以用它翻译、查单词、练发音、纠错、润色。
 
 **作者：Rac 🦝**
 
-## 能做什么
+## 适合谁
 
-- `en:` 中文 → 英文
-- `zh:` 英文 → 中文
-- `word:` 单词 / 短语卡片
-- `words:` 从一段英文里提取值得学的词
-- `say:` 发音、重音、跟读
-- `fix:` 纠错
-- `polish:` 润色
+- 想把中文说成英文
+- 想看懂英文句子
+- 想查单词 / 短语的等级、发音、例句
+- 想纠正一句英文
+- 想练口语跟读
 
 ## 安装 / 更新
 
@@ -22,17 +20,20 @@
 请帮我安装或更新这个 skill：https://github.com/BlueBirdBack/english-coach
 ```
 
-## 快速例子
+## 怎么用
 
-```text
-word: mosquito
-words: paste an English paragraph here
-say: how are you doing?
-fix: I goed to store
-en: 我想确认一下这个方案是否合理
-zh: That sounds like a plausible explanation.
-polish: Thanks for your help
-```
+复制一行，把后面的内容换成你自己的。
+
+| 你输入 | 它会做什么 |
+|---|---|
+| `en: 我想确认一下这个方案是否合理` | 中文 → 英文 |
+| `zh: That sounds plausible.` | 英文 → 中文 |
+| `word: mosquito` | 单词卡：等级、发音、中文、例句 |
+| `word: mosquito repellent` | 短语卡 |
+| `words: paste an English paragraph here` | 从一段英文里挑重点词 |
+| `say: how are you doing?` | 发音、重音、跟读 |
+| `fix: I goed to store` | 纠错 |
+| `polish: Thanks for your help` | 润色 |
 
 ## 示例：`word: mosquito`
 
@@ -54,20 +55,10 @@ Examples:
 3. Use mosquito repellent.
 ```
 
-### MP3 发音
+### 听发音
 
 [word-mosquito.mp3](assets/audio/word-mosquito.mp3)
 
-### 单词图片
+### 看图片记单词
 
 ![word: mosquito](assets/images/word-mosquito.png)
-
-## 文件结构
-
-```text
-SKILL.md
-references/cefr.md
-references/EFLLex_NLP4J
-assets/audio/word-mosquito.mp3
-assets/images/word-mosquito.png
-```

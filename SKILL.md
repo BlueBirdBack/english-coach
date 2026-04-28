@@ -74,7 +74,7 @@ Required local references:
 - `scripts/build_efllex_cache.py` — one-time importer from EFLLex TSV to SQLite
 - `scripts/efllex_lookup.py` — read-only singleton SQLite lookup helper
 
-Use the prebuilt EFLLex SQLite cache for word-level lookup when available. Never load or scan the full TSV at request time. If the cache is unavailable or the word is missing, estimate the CEFR level directly without mentioning EFLLex.
+Use `scripts/efllex_lookup.py` and the prebuilt `references/efllex.sqlite` cache for word-level lookup when available. Never load or scan the full TSV at request time. The cache stores one deterministic `word_best` row per normalized word: earliest CEFR level wins, then higher total frequency, then stable tag/word tie-breakers. If the cache is unavailable or the word is missing, estimate the CEFR level directly without mentioning EFLLex.
 
 Phrase CEFR policy:
 - EFLLex is word-level, not phrase-level.

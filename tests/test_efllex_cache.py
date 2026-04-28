@@ -12,6 +12,21 @@ sys.path.insert(0, str(ROOT))
 from scripts.build_efllex_cache import build_cache, choose_cefr, normalize_word  # noqa: E402
 from scripts.efllex_lookup import CefrLookup  # noqa: E402
 
+REAL_SQLITE = ROOT / "references" / "efllex.sqlite"
+VALID_CEFR_LEVELS = {"A1", "A2", "B1", "B2", "C1"}
+EXPECTED_REAL_COUNTS = {
+    "entries_rows": 15278,
+    "distinct_words": 13869,
+    "word_best_rows": 14299,
+}
+EXPECTED_REAL_CEFR_COUNTS = {
+    "A1": 2394,
+    "A2": 2478,
+    "B1": 2739,
+    "B2": 3934,
+    "C1": 3733,
+}
+
 
 @pytest.fixture(autouse=True)
 def reset_cefr_lookup_singleton():
@@ -136,3 +151,78 @@ def test_lookup_is_singleton_and_uses_read_only_connection(tmp_path):
         first.conn.execute(
             "INSERT INTO metadata(key, value) VALUES ('should_fail', 'yes')"
         )
+
+
+def test_real_sqlite_cache_has_expected_full_dataset_counts():
+    assert REAL_SQLITE.exists()
+
+    with sqlite3.connect(REAL_SQLITE) as conn:
+        actual_counts = {
+            "entries_rows": conn.execute("SELECT COUNT(*) FROM entries").fetchone()[0],
+            "distinct_words": conn.execute(
+                "SELECT COUNT(DISTINCT normalized_word) FROM entries"
+            ).fetchone()[0],
+            "word_best_rows": conn.execute("SELECT COUNT(*) FROM word_best").fetchone()[0],
+        }
+        actual_cefr_counts = dict(
+            conn.execute(
+                "SELECT cefr, COUNT(*) FROM entries GROUP BY cefr ORDER BY cefr"
+            ).fetchall()
+        )
+        metadata = dict(conn.execute("SELECT key, value FROM metadata").fetchall())
+
+    assert actual_counts == EXPECTED_REAL_COUNTS
+    assert actual_cefr_counts == EXPECTED_REAL_CEFR_COUNTS
+    assert metadata["inserted_rows"] == str(EXPECTED_REAL_COUNTS["entries_rows"] + 1)
+    assert metadata["skipped_rows"] == "2"
+
+
+def test_real_sqlite_cache_contains_only_valid_cefr_values_and_lookupable_words():
+    lookup = CefrLookup(REAL_SQLITE)
+
+    with sqlite3.connect(REAL_SQLITE) as conn:
+        invalid_cefr_count = conn.execute(
+            "SELECT COUNT(*) FROM entries WHERE cefr NOT IN ('A1', 'A2', 'B1', 'B2', 'C1')"
+        ).fetchone()[0]
+        nullish_count = conn.execute(
+            """
+            SELECT COUNT(*) FROM entries
+            WHERE word = '' OR normalized_word = '' OR tag = '' OR cefr = ''
+            """
+        ).fetchone()[0]
+        duplicate_tag_rows = conn.execute(
+            """
+            SELECT COUNT(*) FROM (
+                SELECT normalized_word, tag
+                FROM entries
+                GROUP BY normalized_word, tag
+                HAVING COUNT(*) > 1
+            )
+            """
+        ).fetchone()[0]
+        lookup_words = [
+            row[0]
+            for row in conn.execute(
+                "SELECT DISTINCT normalized_word FROM word_best ORDER BY normalized_word"
+            ).fetchall()
+        ]
+
+    assert invalid_cefr_count == 0
+    assert nullish_count == 0
+    assert duplicate_tag_rows == 0
+    assert lookup_words
+
+    for word in lookup_words:
+        result = lookup.lookup(word)
+        assert result is not None, word
+        assert result["normalized_word"] == word
+        assert result["cefr"] in VALID_CEFR_LEVELS
+
+
+def test_real_sqlite_cache_known_fixture_words():
+    lookup = CefrLookup(REAL_SQLITE)
+
+    assert lookup.lookup("plausible")["cefr"] == "B2"
+    assert lookup.lookup("the")["cefr"] == "A1"
+    assert lookup.lookup("work")["cefr"] == "A1"
+    assert lookup.lookup("resilience") is None

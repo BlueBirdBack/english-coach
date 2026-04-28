@@ -78,29 +78,10 @@ Examples:
 
 ### 安装 uv
 
-macOS / Linux：
+不用自己复制命令行。把下面这句发给 Hermes：
 
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
-
-Windows PowerShell：
-
-```powershell
-irm https://astral.sh/uv/install.ps1 | iex
-```
-
-检查是否安装成功：
-
-```bash
-uv --version
-uv python --version
-```
-
-如果没有 Python，安装一个 3.11+ 版本：
-
-```bash
-uv python install 3.11
+```text
+请帮我安装 uv，并确认 Python 3.11+ 可用；如果缺 Python，请用 uv 安装 Python 3.11。安装完成后告诉我 uv 和 Python 的版本。
 ```
 
 ### 重新生成 EFLLex SQLite（可选）

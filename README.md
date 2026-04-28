@@ -21,6 +21,14 @@ Examples:
 3. Soap is a cleaning agent.
 ```
 
+### 听发音
+
+[word-agent.mp3](assets/audio/word-agent.mp3)
+
+### 看图片记单词
+
+![word: agent](assets/images/word-agent.png)
+
 ## 示例 2：`word: harness`
 
 ```text
@@ -37,6 +45,14 @@ Examples:
 2. We use a test harness to run the checks automatically.
 3. The company wants to harness AI to improve customer support.
 ```
+
+### 听发音
+
+[word-harness.mp3](assets/audio/word-harness.mp3)
+
+### 看图片记单词
+
+![word: harness](assets/images/word-harness.png)
 
 ## 安装
 

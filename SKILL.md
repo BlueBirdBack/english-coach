@@ -193,7 +193,7 @@ What to read aloud:
 - Living Vocab list: each term + simplified example
 - Pronunciation: target + slow/natural/fast shadowing lines. For TTS, remove visual rhythm markers such as `/`, bullets, labels, IPA, and markdown so the audio does not read punctuation aloud.
 
-- Word images: depict the most visual example sentence. Avoid text-heavy flashcards; show a scene that implies the meaning.
+- Word images: depict the most visual example sentence. Use the most suitable visual style for the word or phrase: realistic for concrete nouns/actions, simple educational illustration for abstract ideas, and diagram-like composition for technical terms. Avoid text-heavy flashcards; show a scene that implies the meaning.
 
 ## Trigger examples
 

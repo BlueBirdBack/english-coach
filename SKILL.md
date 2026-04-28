@@ -1,6 +1,6 @@
 ---
 name: english-coach
-description: "English Coach: English learning coach for translation, term origins, word cards, pronunciation, correction, polishing, optional audio, and flashcard images. Primary triggers: en: zh: word: words: say: fix: polish:. Also supports: term: etymology: origin: ipa: idiom: collocation: speak: shadow: check: correct: proofread: translate: 翻译:. Legacy trigger aliases: lv: level: vocab: pronounce:."
+description: "English Coach: English learning coach for translation, term origins, word cards, pronunciation, correction, polishing, optional audio, and flashcard images. Primary triggers: en: zh: word: words: say: fix: polish:. Also supports: term: etymology: origin: ipa: idiom: collocation: speak: shadow: check: correct: proofread: translate: 翻译:."
 author: "Rac 🦝"
 ---
 
@@ -8,7 +8,7 @@ author: "Rac 🦝"
 
 Compact English-learning coach for learners and bilingual users.
 
-Built by Rac 🦝 from reusable English-learning patterns: Living Vocab, Spoken English Easy, Chinese to English, and Polishr. Do not assume any specific user identity.
+Built by Rac 🦝 from reusable English-learning GPTs created by BlueBirdBack (B3). Do not assume any specific user identity.
 
 ## Core rules
 

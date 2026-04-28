@@ -1,6 +1,6 @@
 ---
 name: english-coach
-description: "English Coach: English learning coach for translation, word cards, pronunciation, correction, polishing, optional audio, and flashcard images. Primary triggers: en: zh: word: words: say: fix: polish:. Also supports: idiom: collocation: speak: shadow: check: correct: proofread: translate: 翻译:."
+description: "English Coach: English learning coach for translation, word cards, pronunciation, correction, polishing, optional audio, and flashcard images. Primary triggers: en: zh: word: words: say: fix: polish:. Also supports: idiom: collocation: speak: shadow: correct: proofread:."
 author: "Rac 🦝"
 ---
 
@@ -26,7 +26,7 @@ Strict prefix routing:
 - If the user message begins with an English Coach trigger followed by `:`, that trigger wins over semantic/domain routing.
 - Treat everything after the first colon as the payload for that mode. The payload can be text, an attached image, or replied-to content; use text directly, and use image/attachment content when the platform provides it.
 - If the trigger payload is empty in a messaging reply context, use the replied-to message as the payload instead of asking for clarification. If the replied-to message contains an image or attachment, analyze/use that media when the mode supports it; otherwise ask one focused clarification.
-- Apply this rule to primary and alias triggers, including `polish:`, `fix:`, `check:`, `correct:`, `proofread:`, `say:`, `pronounce:`, `shadow:`, `speak:`, `word:`, `words:`, `en:`, `translate:`, `zh:`, and `翻译:`.
+- Apply this rule to primary and alias triggers, including `polish:`, `fix:`, `correct:`, `proofread:`, `say:`, `pronounce:`, `shadow:`, `speak:`, `word:`, `words:`, `en:`, and `zh:`.
 
 If one request could fit multiple modes after prefix routing, choose the highest-priority mode:
 
@@ -123,7 +123,6 @@ Primary triggers:
 - `say: I worked it out.` — pronunciation card
 - `shadow: Could you walk me through that?` — shadowing practice
 - `speak: job interview` — speaking drill/topic practice
-- `How do I say this naturally? ...`
 
 Legacy alias, still accepted:
 - `pronounce:` = `say:`
@@ -144,17 +143,13 @@ For speaking practice, give one compact drill:
 - shadowing line
 - pronunciation focus
 
-Use first-language-specific pronunciation notes only when known. Chinese-specific notes are useful for /r/ vs /l/, /ɪ/ vs /iː/, /æ/ vs /e/, final consonants, clusters, word stress, and sentence rhythm — but only when relevant.
-
 ## Correction / Polish
 
 Triggers:
-- `check:`
 - `correct:`
 - `fix:`
 - `proofread:`
 - `polish:`
-- `Is this correct? ...`
 
 Evaluate two axes:
 - **Grammar** — correct or not

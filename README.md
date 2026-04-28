@@ -4,33 +4,39 @@
 
 **作者：Rac 🦝**
 
-## 示例：`word: mosquito`
+## 示例 1：`word: agent`
 
 ```text
-Word: mosquito
-CEFR: B1
-IPA: /məˈskiː.toʊ/ US · /mɒˈskiː.təʊ/ UK
+Word/Phrase: agent
+CEFR: B1–B2
+IPA: /ˈeɪ.dʒənt/
 Part of speech: noun
-Meaning: a small flying insect that bites people and animals
-中文: 蚊子
-
-Simpler ladder: bug → insect → mosquito
-
-Collocations: mosquito bite · mosquito net · mosquito repellent · mosquitoes buzz
-
+Meaning: a person or system that acts for someone, or something that causes change
+中文: 代理人；智能体；作用因素
+Simpler ladder: person → helper → representative → agent
+Collocations: travel agent · AI agent · secret agent · cleaning agent
 Examples:
-1. A mosquito bit me.
-2. There are mosquitoes near the water.
-3. Use mosquito repellent.
+1. The travel agent booked our tickets.
+2. An AI agent can complete tasks for a user.
+3. Soap is a cleaning agent.
 ```
 
-### 听发音
+## 示例 2：`word: harness`
 
-[word-mosquito.mp3](assets/audio/word-mosquito.mp3)
-
-### 看图片记单词
-
-![word: mosquito](assets/images/word-mosquito.png)
+```text
+Word/Phrase: harness
+CEFR: B2 (estimated)
+IPA: /ˈhɑːr.nəs/ US · /ˈhɑː.nəs/ UK
+Part of speech: noun / verb
+Meaning: equipment that holds someone safely; or to control and use something powerful
+中文: 安全带；挽具；利用
+Simpler ladder: hold → use → control → harness
+Collocations: safety harness · test harness · harness energy · harness the power of AI
+Examples:
+1. The worker wore a safety harness.
+2. We use a test harness to run the checks automatically.
+3. The company wants to harness AI to improve customer support.
+```
 
 ## 安装
 

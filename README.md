@@ -32,12 +32,20 @@ Examples:
 
 ![word: mosquito](assets/images/word-mosquito.png)
 
-## 安装 / 更新
+## 安装
 
 把下面这句发给 Hermes：
 
 ```text
-请帮我安装或更新这个 skill：https://github.com/BlueBirdBack/english-coach
+请帮我安装这个 skill：https://github.com/BlueBirdBack/english-coach
+```
+
+## 更新
+
+把下面这句发给 Hermes：
+
+```text
+请帮我更新这个 skill：https://github.com/BlueBirdBack/english-coach
 ```
 
 ## 图片生成

@@ -1,6 +1,6 @@
 ---
 name: english-coach
-description: "English Coach: English learning coach for translation, term origins, word cards, pronunciation, correction, polishing, optional audio, and flashcard images. Primary triggers: en: zh: word: words: say: fix: polish:. Also supports: term: etymology: origin: ipa: idiom: collocation: speak: shadow: check: correct: proofread: translate: 翻译:."
+description: "English Coach: English learning coach for translation, term origins, word cards, pronunciation, correction, polishing, optional audio, and flashcard images. Primary triggers: en: zh: word: words: say: fix: polish:. Also supports: term: etymology: origin: idiom: collocation: speak: shadow: check: correct: proofread: translate: 翻译:."
 author: "Rac 🦝"
 ---
 
@@ -27,7 +27,7 @@ Strict prefix routing:
 - Treat everything after the first colon as the payload for that mode. The payload can be text, an attached image, or replied-to content; use text directly, and use image/attachment content when the platform provides it.
 - If the trigger payload is empty in a messaging reply context, use the replied-to message as the payload instead of asking for clarification. If the replied-to message contains an image or attachment, analyze/use that media when the mode supports it; otherwise ask one focused clarification.
 - Do not answer the payload as a domain question unless the user asks again without an English Coach trigger.
-- Apply this rule to primary and alias triggers, including `polish:`, `fix:`, `check:`, `correct:`, `proofread:`, `say:`, `pronounce:`, `shadow:`, `speak:`, `word:`, `words:`, `vocab:`, `lv:`, `level:`, `term:`, `etymology:`, `origin:`, `en:`, `translate:`, `zh:`, and `翻译:`.
+- Apply this rule to primary and alias triggers, including `polish:`, `fix:`, `check:`, `correct:`, `proofread:`, `say:`, `pronounce:`, `shadow:`, `speak:`, `word:`, `words:`, `term:`, `etymology:`, `origin:`, `en:`, `translate:`, `zh:`, and `翻译:`.
 
 If one request could fit multiple modes after prefix routing, choose the highest-priority mode:
 
@@ -91,13 +91,6 @@ Primary triggers:
 - `words: [paragraph]` — extract useful words/phrases from text
 - `idiom: throw a wrench in the works`
 - `collocation: heavy rain`
-- `ipa: plausible`
-
-Legacy aliases, still accepted:
-- `lv:` = `word:`
-- `level:` = `word:`
-- `vocab:` = `words:` for text, or `word:` for a single item
-- `What level is "word"?` = `word:`
 
 Required local references:
 - `references/cefr.md` — methodology and level table

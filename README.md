@@ -40,39 +40,11 @@ Examples:
 请帮我安装或更新这个 skill：https://github.com/BlueBirdBack/english-coach
 ```
 
-## 可选：开启 `image_gen` 图片生成
+## 图片生成
 
-`image_gen` 是 Hermes 的图片生成工具集，不是这个 skill 自带的模型或 API key。English Coach 只在做单词卡时用它生成「看图记单词」图片。
+English Coach 做单词卡时会优先返回文字；如果 Hermes 已启用图片生成，会再生成「看图记单词」图片。
 
-不用 `image_gen` 也能正常使用：翻译、查词、纠错、润色、发音和 MP3 都不依赖图片生成。
-
-`image_gen` 的行为：
-
-- 已启用并配置好：Hermes 会调用 `image_generate` 生成单词配图。
-- 未启用或未配置好：English Coach 仍会返回文字结果和音频，并给一段可复用的图片 prompt。
-- 报 `FAL_KEY environment variable not set`：说明 Hermes 还在走默认 FAL 图片后端，但当前机器没有配置 FAL key。
-
-推荐改用 Codex/ChatGPT OAuth 的 GPT Image 2，不需要 `OPENAI_API_KEY`。
-
-想让 Hermes 帮你自动配置，把这句发给 Hermes：
-
-```text
-请帮我自动配置 image_gen：启用 image_gen，优先使用 openai-codex + gpt-image-2-medium；如果需要登录 Codex，请引导我完成 `hermes login --provider openai-codex`；配置后告诉我是否要 `/reset` 或 `/restart`。
-```
-
-手动配置也可以：
-
-```bash
-hermes tools enable image_gen
-hermes auth status openai-codex
-hermes login --provider openai-codex
-hermes config set image_gen.provider openai-codex
-hermes config set image_gen.model gpt-image-2-medium
-```
-
-然后开启新会话；如果是在 Telegram / Discord gateway 里用 Hermes，执行 `/restart`。
-
-如果你想继续用 FAL，也可以设置 `FAL_KEY`。
+不用图片生成也能正常使用：翻译、查词、纠错、润色、发音和音频都不依赖图片生成。未启用图片生成时，English Coach 会给一段可复用的图片 prompt。
 
 ## 怎么用
 

@@ -1,6 +1,6 @@
 ---
 name: english-coach
-description: "English Coach: English learning coach for translation, term origins, word cards, pronunciation, correction, polishing, optional audio, and flashcard images. Primary triggers: en: zh: word: words: say: fix: polish:. Also supports: term: etymology: origin: idiom: collocation: speak: shadow: check: correct: proofread: translate: 翻译:."
+description: "English Coach: English learning coach for translation, word cards, pronunciation, correction, polishing, optional audio, and flashcard images. Primary triggers: en: zh: word: words: say: fix: polish:. Also supports: idiom: collocation: speak: shadow: check: correct: proofread: translate: 翻译:."
 author: "Rac 🦝"
 ---
 
@@ -26,8 +26,7 @@ Strict prefix routing:
 - If the user message begins with an English Coach trigger followed by `:`, that trigger wins over semantic/domain routing.
 - Treat everything after the first colon as the payload for that mode. The payload can be text, an attached image, or replied-to content; use text directly, and use image/attachment content when the platform provides it.
 - If the trigger payload is empty in a messaging reply context, use the replied-to message as the payload instead of asking for clarification. If the replied-to message contains an image or attachment, analyze/use that media when the mode supports it; otherwise ask one focused clarification.
-- Do not answer the payload as a domain question unless the user asks again without an English Coach trigger.
-- Apply this rule to primary and alias triggers, including `polish:`, `fix:`, `check:`, `correct:`, `proofread:`, `say:`, `pronounce:`, `shadow:`, `speak:`, `word:`, `words:`, `term:`, `etymology:`, `origin:`, `en:`, `translate:`, `zh:`, and `翻译:`.
+- Apply this rule to primary and alias triggers, including `polish:`, `fix:`, `check:`, `correct:`, `proofread:`, `say:`, `pronounce:`, `shadow:`, `speak:`, `word:`, `words:`, `en:`, `translate:`, `zh:`, and `翻译:`.
 
 If one request could fit multiple modes after prefix routing, choose the highest-priority mode:
 
@@ -60,30 +59,6 @@ ZH→EN learner upgrade, when useful:
 
 When translating or upgrading ZH→EN, watch for common learner issues: missing subjects, articles, connectors, tense, plural forms, direct-translated idioms, and filler like “I want to say that.”
 
-## Term origin / terminology
-
-Triggers:
-- `term: agent`
-- `etymology: agent`
-- `origin: agent`
-- Natural questions like “Does agent come from agency?” or “What does X mean in AI?”
-
-Do:
-- Give the short truth first: yes / no / partly.
-- Distinguish **etymology** (word history) from **current meaning** and **field-specific usage**.
-- For AI/software terms, explain the ordinary-English meaning, the technical meaning, and a natural Chinese translation when useful.
-- If the user includes their own English sentence, also correct obvious learner errors briefly.
-- Keep it compact unless the user asks for sources or depth.
-
-Default format:
-```text
-Short answer: ...
-Why: ...
-In AI/software: ...
-Natural Chinese: ...
-Your sentence: ...
-```
-
 ## Words / CEFR / Living Vocab
 
 Primary triggers:
@@ -94,9 +69,12 @@ Primary triggers:
 
 Required local references:
 - `references/cefr.md` — methodology and level table
-- `references/EFLLex_NLP4J` — TSV CEFR lookup data
+- `references/EFLLex_NLP4J` — raw TSV CEFR source data
+- `references/efllex.sqlite` — prebuilt SQLite cache for fast word-level lookup
+- `scripts/build_efllex_cache.py` — one-time importer from EFLLex TSV to SQLite
+- `scripts/efllex_lookup.py` — read-only singleton SQLite lookup helper
 
-Use EFLLex for word-level lookup. Do not load the full TSV into chat context. If a word is missing, estimate the level without mentioning EFLLex.
+Use the prebuilt EFLLex SQLite cache for word-level lookup when available. Never load or scan the full TSV at request time. If the cache is unavailable or the word is missing, estimate the CEFR level directly without mentioning EFLLex.
 
 Phrase CEFR policy:
 - EFLLex is word-level, not phrase-level.
@@ -247,7 +225,6 @@ What to read aloud:
 
 | Request | Result |
 |---|---|
-| `term: agent` | Explain word origin, current meaning, and AI/software usage |
 | `zh: Hello there` | EN→ZH translation |
 | `en: 你好` | ZH→EN natural English |
 | `word: resilience` | CEFR + IPA + examples |

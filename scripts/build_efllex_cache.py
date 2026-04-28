@@ -19,6 +19,7 @@ import sqlite3
 from pathlib import Path
 
 LEVELS = ("a1", "a2", "b1", "b2", "c1")
+LEVEL_RANK = {"A1": 1, "A2": 2, "B1": 3, "B2": 4, "C1": 5}
 WORD_RE = re.compile(r"^[\w'’.-]+$", re.UNICODE)
 
 
@@ -48,11 +49,32 @@ def choose_cefr(row: dict[str, str]) -> tuple[str | None, float]:
     return None, 0.0
 
 
+def best_entry_key(entry: tuple[str, str, str, str, float, float, str]) -> tuple[int, float, str, str]:
+    """Sort key for choosing one deterministic best row for a word.
+
+    Lower CEFR rank wins first because the cache represents the earliest
+    learner level with evidence. Higher total frequency then wins among rows at
+    the same level. Tag and word are final stable tie-breakers.
+    """
+
+    word, _normalized, tag, cefr, _score, total_freq, _source = entry
+    return (LEVEL_RANK.get(cefr, 99), -total_freq, tag, word)
+
+
 def iter_rows(tsv_path: Path):
     with tsv_path.open("r", encoding="utf-8-sig", newline="") as f:
         reader = csv.DictReader(f, delimiter="\t")
         for row in reader:
             yield row
+
+
+def _group_entries_by_word(
+    rows: list[tuple[str, str, str, str, float, float, str]],
+) -> dict[str, list[tuple[str, str, str, str, float, float, str]]]:
+    grouped: dict[str, list[tuple[str, str, str, str, float, float, str]]] = {}
+    for row in rows:
+        grouped.setdefault(row[1], []).append(row)
+    return grouped
 
 
 def build_cache(tsv_path: Path, db_path: Path) -> tuple[int, int]:
@@ -71,41 +93,28 @@ def build_cache(tsv_path: Path, db_path: Path) -> tuple[int, int]:
         conn.executescript(
             """
             CREATE TABLE entries (
+                id INTEGER PRIMARY KEY,
                 word TEXT NOT NULL,
                 normalized_word TEXT NOT NULL,
                 tag TEXT NOT NULL,
                 cefr TEXT NOT NULL,
                 level_score REAL NOT NULL,
                 total_freq REAL NOT NULL,
-                source TEXT NOT NULL,
-                PRIMARY KEY (normalized_word, tag)
+                source TEXT NOT NULL
             );
 
             CREATE INDEX idx_entries_word ON entries(normalized_word);
             CREATE INDEX idx_entries_cefr ON entries(cefr);
+            CREATE INDEX idx_entries_word_tag ON entries(normalized_word, tag);
 
-            CREATE VIEW word_best AS
-            SELECT
-                normalized_word,
-                word,
-                cefr,
-                tag,
-                level_score,
-                total_freq,
-                source
-            FROM entries e
-            WHERE NOT EXISTS (
-                SELECT 1 FROM entries better
-                WHERE better.normalized_word = e.normalized_word
-                  AND (
-                    CASE better.cefr
-                      WHEN 'A1' THEN 1 WHEN 'A2' THEN 2 WHEN 'B1' THEN 3
-                      WHEN 'B2' THEN 4 WHEN 'C1' THEN 5 ELSE 99 END
-                  ) < (
-                    CASE e.cefr
-                      WHEN 'A1' THEN 1 WHEN 'A2' THEN 2 WHEN 'B1' THEN 3
-                      WHEN 'B2' THEN 4 WHEN 'C1' THEN 5 ELSE 99 END
-                  )
+            CREATE TABLE word_best (
+                normalized_word TEXT PRIMARY KEY,
+                word TEXT NOT NULL,
+                cefr TEXT NOT NULL,
+                tag TEXT NOT NULL,
+                level_score REAL NOT NULL,
+                total_freq REAL NOT NULL,
+                source TEXT NOT NULL
             );
 
             CREATE TABLE metadata (
@@ -139,11 +148,23 @@ def build_cache(tsv_path: Path, db_path: Path) -> tuple[int, int]:
 
         conn.executemany(
             """
-            INSERT OR REPLACE INTO entries
+            INSERT INTO entries
             (word, normalized_word, tag, cefr, level_score, total_freq, source)
             VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
             rows,
+        )
+        best_rows = [
+            sorted(entries, key=best_entry_key)[0]
+            for entries in _group_entries_by_word(rows).values()
+        ]
+        conn.executemany(
+            """
+            INSERT INTO word_best
+            (word, normalized_word, tag, cefr, level_score, total_freq, source)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """,
+            best_rows,
         )
         conn.executemany(
             "INSERT INTO metadata(key, value) VALUES (?, ?)",

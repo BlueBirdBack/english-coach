@@ -182,30 +182,9 @@ Default media policy:
 - For `say:`, `pronounce:`, `shadow:`, and speaking drills, generate `text_to_speech` when the tool is available.
 - For `words:` lists, keep media selective: use TTS only for short lists or the most useful items.
 
-Image setup helper:
-- If the user asks to configure, enable, fix, or auto-set `image_gen`, treat it as Hermes setup support, not English coaching.
-- Do not change Hermes config during ordinary English Coach requests unless the user explicitly asks to set up or fix `image_gen`.
-- If terminal access is available and the user explicitly asks for setup, check current state with `hermes tools list` and `hermes auth status openai-codex`.
-- Preferred setup is Codex/ChatGPT OAuth + GPT Image 2:
-  ```bash
-  hermes tools enable image_gen
-  hermes config set image_gen.provider openai-codex
-  hermes config set image_gen.model gpt-image-2-medium
-  ```
-- If Codex is not logged in, ask/direct the user to complete `hermes login --provider openai-codex`; OAuth/device login requires human approval, so do not claim setup is complete until verified.
-- After changing tool/config settings, tell the user to start a new session, or run `/restart` in a messaging gateway.
-
 Fallbacks:
 - If TTS is unavailable, skip audio.
 - If image generation is unavailable, include a reusable image prompt.
-- If image generation fails with `FAL_KEY environment variable not set`, explain that Hermes is still using the default FAL image backend. Suggest this Codex/ChatGPT OAuth setup:
-  ```bash
-  hermes tools enable image_gen
-  hermes login --provider openai-codex
-  hermes config set image_gen.provider openai-codex
-  hermes config set image_gen.model gpt-image-2-medium
-  ```
-  Then tell the user to start a new session, or run `/restart` in a messaging gateway. Alternative: set `FAL_KEY` to keep using FAL.
 
 What to read aloud:
 - Translation: translated result only

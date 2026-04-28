@@ -177,7 +177,7 @@ For short messages, usually return only **Little better**, **Changes**, and one 
 Text result always comes first, then media by default for English-learning requests.
 
 Default media policy:
-- For `word:` cards, generate `text_to_speech` for the target word and examples when the tool is available.
+- For `word:` cards, generate `text_to_speech` for the target word and the exact example sentences shown in the text card when the tool is available. Do not invent or substitute different audio examples.
 - For visual vocabulary, generate `image_generate` flashcards when the tool is available.
 - For `say:`, `pronounce:`, `shadow:`, and speaking drills, generate `text_to_speech` when the tool is available.
 - For `words:` lists, keep media selective: use TTS only for short lists or the most useful items.
@@ -189,7 +189,7 @@ Fallbacks:
 What to read aloud:
 - Translation: translated result only
 - Correction/polish: best version only
-- Words: word/phrase + examples
+- Words: word/phrase + the exact `Examples` sentences shown in the text card
 - Living Vocab list: each term + simplified example
 - Pronunciation: target + slow/natural/fast shadowing lines. For TTS, remove visual rhythm markers such as `/`, bullets, labels, IPA, and markdown so the audio does not read punctuation aloud.
 

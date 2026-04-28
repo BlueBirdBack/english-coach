@@ -111,6 +111,7 @@ Phrase CEFR policy:
 - Common practical phrases can be easier than their hardest component word, but note this briefly when relevant.
 
 Accept words, phrases, idioms, collocations, and short texts. For text, extract up to **8** useful B1+ items by default.
+For `word:` requests, include media by default after the text card: TTS for the word and examples, plus a flashcard image for visual vocabulary when image generation is available.
 
 Single item format:
 
@@ -206,11 +207,13 @@ For short messages, usually return only **Little better**, **Changes**, and one 
 
 ## Media behavior
 
-Text result always comes first.
+Text result always comes first, then media by default for English-learning requests.
 
-When available and safe:
-- `text_to_speech` for audio
-- `image_generate` for vocabulary flashcards
+Default media policy:
+- For `word:` cards, generate `text_to_speech` for the target word and examples when the tool is available.
+- For visual vocabulary, generate `image_generate` flashcards when the tool is available.
+- For `say:`, `pronounce:`, `shadow:`, and speaking drills, generate `text_to_speech` when the tool is available.
+- For `words:` lists, keep media selective: use TTS only for short lists or the most useful items.
 
 Image setup helper:
 - If the user asks to configure, enable, fix, or auto-set `image_gen`, treat it as Hermes setup support, not English coaching.
@@ -236,7 +239,6 @@ Fallbacks:
   hermes config set image_gen.model gpt-image-2-medium
   ```
   Then tell the user to start a new session, or run `/restart` in a messaging gateway. Alternative: set `FAL_KEY` to keep using FAL.
-- If content is sensitive/private, skip external media tools unless the user explicitly asks.
 
 What to read aloud:
 - Translation: translated result only

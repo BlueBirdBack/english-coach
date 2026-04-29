@@ -29,6 +29,10 @@ Examples:
 
 ![word: agent](assets/images/word-agent.png)
 
+### 看视频记单词
+
+[word-agent.mp4](assets/videos/word-agent.mp4)
+
 ## 示例 2：`word: harness`
 
 ```text
@@ -53,6 +57,10 @@ Examples:
 ### 看图片记单词
 
 ![word: harness](assets/images/word-harness.png)
+
+### 看视频记单词
+
+[word-harness.mp4](assets/videos/word-harness.mp4)
 
 ## 安装
 
@@ -103,6 +111,21 @@ uv add --dev pytest
 uv run pytest -q
 ```
 
+## 视频生成：把音频 + 图片合成 MP4
+
+`word:` 现在的媒体顺序是：先生成文字卡，再生成音频和图片；如果两者都可用，就把它们合成一个短视频，方便在 Telegram / Discord 里直接看和听。
+
+手动合成示例：
+
+```bash
+uv run python scripts/word_video.py \
+  --image assets/images/word-agent.png \
+  --audio assets/audio/word-agent.mp3 \
+  --output assets/videos/word-agent.mp4
+```
+
+需要本机有 `ffmpeg`。如果视频生成失败，English Coach 仍然可以退回到单独发送音频和图片。
+
 ## 图片生成 image_gen 设置
 
 不用图片生成也能正常使用：翻译、查词、纠错、润色、发音和音频都不依赖图片生成。
@@ -143,7 +166,7 @@ hermes config set image_gen.model gpt-image-2-medium
 |---|---|
 | `en: 我想确认一下这个方案是否合理` | 中文 → 英文 |
 | `zh: That sounds plausible.` | 英文 → 中文 |
-| `word: agent` | 单词卡：等级、发音、中文、例句、音频、图片 |
+| `word: agent` | 单词卡：等级、发音、中文、例句、音频、图片、视频 |
 | `word: harness` | 单词卡：支持名词/动词、多义项 |
 | `words: paste an English paragraph here` | 从一段英文里挑重点词 |
 | `say: how are you doing?` | 发音、重音、跟读 |

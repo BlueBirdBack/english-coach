@@ -1,6 +1,6 @@
 ---
 name: english-coach
-description: "English Coach: English learning coach for translation, word cards, pronunciation, correction, polishing, optional audio, and flashcard images. Primary triggers: en: zh: word: words: say: fix: polish:. Also supports: idiom: collocation: speak: shadow: correct: proofread:."
+description: "English Coach: English learning coach for translation, word cards, pronunciation, correction, polishing, optional audio, flashcard images, and word-card videos. Primary triggers: en: zh: word: words: say: fix: polish:. Also supports: idiom: collocation: speak: shadow: correct: proofread:."
 author: "Rac 🦝"
 ---
 
@@ -83,7 +83,7 @@ Phrase CEFR policy:
 - Common practical phrases can be easier than their hardest component word, but note this briefly when relevant.
 
 Accept words, phrases, idioms, collocations, and short texts. For text, extract up to **8** useful B1+ items by default.
-For `word:` requests, include media by default after the text card: TTS for the word and examples, plus a flashcard image for visual vocabulary when image generation is available.
+For `word:` requests, include media by default after the text card: TTS for the word and examples, plus a flashcard image for visual vocabulary when image generation is available, then combine the image and audio into a short MP4 video when both are available.
 
 Single item format:
 
@@ -179,12 +179,14 @@ Text result always comes first, then media by default for English-learning reque
 Default media policy:
 - For `word:` cards, generate `text_to_speech` for the target word and the exact example sentences shown in the text card when the tool is available. Do not invent or substitute different audio examples.
 - For visual vocabulary, generate `image_generate` flashcards when the tool is available.
+- For `word:` cards, when both the word-card audio and image are available, integrate them into a short MP4 video with `scripts/word_video.py` and send the video after the text card. Keep the separate audio/image as fallback artifacts, but prefer the combined video for delivery.
 - For `say:`, `pronounce:`, `shadow:`, and speaking drills, generate `text_to_speech` when the tool is available.
 - For `words:` lists, keep media selective: use TTS only for short lists or the most useful items.
 
 Fallbacks:
-- If TTS is unavailable, skip audio.
-- If image generation is unavailable, include a reusable image prompt.
+- If TTS is unavailable, skip audio and video.
+- If image generation is unavailable, include a reusable image prompt and skip video.
+- If video creation fails or `ffmpeg` is unavailable, still send the separate audio and image.
 
 What to read aloud:
 - Translation: translated result only
@@ -194,6 +196,7 @@ What to read aloud:
 - Pronunciation: target + slow/natural/fast shadowing lines. For TTS, remove visual rhythm markers such as `/`, bullets, labels, IPA, and markdown so the audio does not read punctuation aloud.
 
 - Word images: depict the most visual example sentence. Use the most suitable visual style for the word or phrase: realistic for concrete nouns/actions, simple educational illustration for abstract ideas, and diagram-like composition for technical terms. Avoid text-heavy flashcards; show a scene that implies the meaning.
+- Word videos: use the exact word-card image and exact TTS audio that were generated for the same text card. Do not regenerate different text for the video. Use `uv run python scripts/word_video.py --image <image_path> --audio <audio_path> --output <video_path>`; the script makes a square MP4 static-image video synced to the audio.
 
 ## Trigger examples
 

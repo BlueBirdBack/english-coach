@@ -32,9 +32,8 @@ If one request could fit multiple modes after prefix routing, choose the highest
 
 1. Correction / polish
 2. Pronunciation / speaking
-3. Term origin / terminology
-4. Words / CEFR
-5. Translation
+3. Words / CEFR
+4. Translation
 
 Ask only if the request is genuinely ambiguous.
 

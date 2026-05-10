@@ -8,13 +8,15 @@
 
 **Key columns:** `word`, `tag` (NN/VB/JJ/RB), `level_freq@a1` through `level_freq@c1`, `total_freq@total`. Remaining ~100 columns are per-textbook breakdowns — ignore.
 
-**Assigning a single level:** Use the lowest level where `level_freq > 0`. If spread across levels, report as range (e.g. "A2–B1") or peak. Ignore entries starting with `-` or containing `_` (NLP4J artifacts).
+**Assigning a single level:** Use the lowest level where `level_freq > 0`. The SQLite cache stores one deterministic `word_best` row per normalized word: earliest CEFR level wins, then higher total frequency, then stable tag/word tie-breakers.
+
+**Filtering:** Skip rows with empty `word`, `tag`, or CEFR level. The cache keeps lookup-friendly lexical entries matching letters/numbers/underscore/apostrophe/curly apostrophe/dot/hyphen; it does not scan or filter the full TSV at request time.
 
 **Limitations:** No C2 data — estimate those. No definitions/IPA/examples — use Claude's knowledge. Does not disambiguate word senses or cover phrasal verbs / multi-word expressions.
 
 ## Output Format
 
-Trigger: `lv: <word>` (aliases: `level:`, `ipa:`, `cefr:`)
+Trigger: `word: <word>`
 
 ---
 

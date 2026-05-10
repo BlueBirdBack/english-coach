@@ -101,14 +101,7 @@ uv run python scripts/build_efllex_cache.py references/EFLLex_NLP4J references/e
 ### 运行测试（可选）
 
 ```bash
-uv run pytest -q
-```
-
-如果没有安装 `pytest`：
-
-```bash
-uv add --dev pytest
-uv run pytest -q
+uv run --with pytest pytest -q
 ```
 
 ## 视频生成：把音频 + 图片合成 MP4
@@ -134,19 +127,23 @@ uv run python scripts/word_video.py \
 
 ### 推荐设置：Codex / ChatGPT OAuth
 
+如果 Hermes 的 `image_gen.provider` 或 `image_gen.model` 已经配置过，不要覆盖现有设置。只有在 `image_gen` 未配置、或你明确想从缺省 FAL 后端切到 Codex 时，才用下面的配置。
+
 把下面这句发给 Hermes：
 
 ```text
-请帮我自动配置 image_gen：启用 image_gen，优先使用 openai-codex + gpt-image-2-medium；如果需要登录 Codex，请引导我完成 `hermes login --provider openai-codex`；配置后提醒我开启新会话或执行 `/restart`。
+请帮我检查 image_gen：如果 image_gen 已经配置了 provider 或 model，请不要改动现有设置；如果还没配置，请启用 image_gen，并使用 openai-codex + gpt-image-2-low；如果需要登录 Codex，请引导我完成 `hermes login --provider openai-codex`；配置后提醒我开启新会话或执行 `/restart`。
 ```
 
-也可以手动执行：
+也可以手动检查后再配置：
 
 ```bash
+hermes config
 hermes tools enable image_gen
 hermes login --provider openai-codex
+# 先看 hermes config 里的 image_gen 段；仅当 provider/model 未配置，或你决定覆盖时才执行：
 hermes config set image_gen.provider openai-codex
-hermes config set image_gen.model gpt-image-2-medium
+hermes config set image_gen.model gpt-image-2-low
 ```
 
 然后开启新会话；如果是在 Telegram / Discord gateway 里用 Hermes，执行 `/restart`。
@@ -157,8 +154,8 @@ hermes config set image_gen.model gpt-image-2-medium
 
 两种选择：
 
-1. 按上面的步骤切换到 `openai-codex + gpt-image-2-medium`。
-2. 如果你想继续用 FAL，就配置 `FAL_KEY`。
+1. 如果 `image_gen` 还没配置，按上面的步骤切换到 `openai-codex + gpt-image-2-low`。
+2. 如果 `image_gen` 已经配置成 FAL，不要自动覆盖；要么配置 `FAL_KEY`，要么明确要求 Hermes 改成 Codex。
 
 ## 怎么用
 

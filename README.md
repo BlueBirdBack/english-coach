@@ -1,201 +1,58 @@
-# 英语教练（English Coach）
+# English Coach
 
-[Hermes](https://github.com/nousresearch/hermes-agent) 里的英语学习教练。适合想学英语的你。
+Hermes 的英语学习 skill。
 
-**作者：Rac 🦝**
+它可以帮你：
 
-## 示例 1：`word: agent`
+- 中英互译
+- 查单词、短语
+- 练发音
+- 改语法
+- 润色英文
 
-```text
-Word/Phrase: agent
-CEFR: B1–B2
-IPA: /ˈeɪ.dʒənt/
-Part of speech: noun
-Meaning: a person or system that acts for someone, or something that causes change
-中文: 代理人；智能体；作用因素
-Simpler ladder: person → helper → representative → agent
-Collocations: travel agent · AI agent · secret agent · cleaning agent
-Examples:
-1. The travel agent booked our tickets.
-2. An AI agent can complete tasks for a user.
-3. Soap is a cleaning agent.
-```
+## 安装 / 更新
 
-### 听发音
-
-[word-agent.mp3](assets/audio/word-agent.mp3)
-
-### 看图片记单词
-
-![word: agent](assets/images/word-agent.png)
-
-### 看视频记单词
-
-[word-agent.mp4](assets/videos/word-agent.mp4)
-
-## 示例 2：`word: harness`
+把这句发给 Hermes：
 
 ```text
-Word/Phrase: harness
-CEFR: B2 (estimated)
-IPA: /ˈhɑːr.nəs/ US · /ˈhɑː.nəs/ UK
-Part of speech: noun / verb
-Meaning: equipment that holds someone safely; or to control and use something powerful
-中文: 安全带；挽具；利用
-Simpler ladder: hold → use → control → harness
-Collocations: safety harness · test harness · harness energy · harness the power of AI
-Examples:
-1. The worker wore a safety harness.
-2. We use a test harness to run the checks automatically.
-3. The company wants to harness AI to improve customer support.
+请帮我安装/更新这个 skill：https://github.com/BlueBirdBack/english-coach
 ```
-
-### 听发音
-
-[word-harness.mp3](assets/audio/word-harness.mp3)
-
-### 看图片记单词
-
-![word: harness](assets/images/word-harness.png)
-
-### 看视频记单词
-
-[word-harness.mp4](assets/videos/word-harness.mp4)
-
-## 安装
-
-把下面这句发给 Hermes：
-
-```text
-请帮我安装这个 skill：https://github.com/BlueBirdBack/english-coach
-```
-
-## 更新
-
-把下面这句发给 Hermes：
-
-```text
-请帮我更新这个 skill：https://github.com/BlueBirdBack/english-coach
-```
-
-## Python / uv 设置
-
-这个 skill 带了一个已经生成好的 EFLLex SQLite 词表缓存，普通使用不需要自己跑 Python。
-
-只有在你想重新生成 `references/efllex.sqlite` 或运行测试时，才需要 Python 和 `uv`。
-
-### 安装 uv
-
-不用自己复制命令行。把下面这句发给 Hermes：
-
-```text
-请帮我安装 uv，并确认 Python 3.11+ 可用；如果缺 Python，请用 uv 安装 Python 3.11。安装完成后告诉我 uv 和 Python 的版本。
-```
-
-### 重新生成 EFLLex SQLite（可选）
-
-```bash
-uv run python scripts/build_efllex_cache.py references/EFLLex_NLP4J references/efllex.sqlite
-```
-
-### 运行测试（可选）
-
-```bash
-uv run --with pytest pytest -q
-```
-
-## 视频生成：把音频 + 图片合成 MP4
-
-`word:` 现在的媒体顺序是：先生成文字卡，再生成音频和图片；如果两者都可用，就把它们合成一个短视频，方便在 Telegram / Discord 里直接看和听。
-
-手动合成示例：
-
-```bash
-uv run python scripts/word_video.py \
-  --image assets/images/word-agent.png \
-  --audio assets/audio/word-agent.mp3 \
-  --output assets/videos/word-agent.mp4
-```
-
-需要本机有 `ffmpeg`。如果视频生成失败，English Coach 仍然可以退回到单独发送音频和图片。
-
-## 图片生成 image_gen 设置
-
-不用图片生成也能正常使用：翻译、查词、纠错、润色、发音和音频都不依赖图片生成。
-
-如果 Hermes 已启用 `image_gen`，English Coach 做 `word:` 单词卡时会自动生成「看图记单词」图片。未启用时，它会给一段可复用的图片 prompt。
-
-### 推荐设置：Codex / ChatGPT OAuth
-
-如果 Hermes 的 `image_gen.provider` 或 `image_gen.model` 已经配置过，不要覆盖现有设置。只有在 `image_gen` 未配置、或你明确想从缺省 FAL 后端切到 Codex 时，才用下面的配置。
-
-把下面这句发给 Hermes：
-
-```text
-请帮我检查 image_gen：如果 image_gen 已经配置了 provider 或 model，请不要改动现有设置；如果还没配置，请启用 image_gen，并使用 openai-codex + gpt-image-2-low；如果需要登录 Codex，请引导我完成 `hermes login --provider openai-codex`；配置后提醒我开启新会话或执行 `/restart`。
-```
-
-也可以手动检查后再配置：
-
-```bash
-hermes config
-hermes tools enable image_gen
-hermes login --provider openai-codex
-# 先看 hermes config 里的 image_gen 段；仅当 provider/model 未配置，或你决定覆盖时才执行：
-hermes config set image_gen.provider openai-codex
-hermes config set image_gen.model gpt-image-2-low
-```
-
-然后开启新会话；如果是在 Telegram / Discord gateway 里用 Hermes，执行 `/restart`。
-
-### 如果看到 FAL_KEY 错误
-
-这通常表示 Hermes 还在使用默认 FAL 图片后端，但当前机器没有配置 FAL key。
-
-两种选择：
-
-1. 如果 `image_gen` 还没配置，按上面的步骤切换到 `openai-codex + gpt-image-2-low`。
-2. 如果 `image_gen` 已经配置成 FAL，不要自动覆盖；要么配置 `FAL_KEY`，要么明确要求 Hermes 改成 Codex。
 
 ## 怎么用
 
-| 你输入 | 它会做什么 |
-|---|---|
-| `en: 我想确认一下这个方案是否合理` | 中文 → 英文 |
-| `zh: That sounds plausible.` | 英文 → 中文 |
-| `word: agent` | 单词卡：等级、发音、中文、例句、音频、图片、视频 |
-| `word: harness` | 单词卡：支持名词/动词、多义项 |
-| `words: paste an English paragraph here` | 从一段英文里挑重点词 |
-| `say: how are you doing?` | 发音、重音、跟读 |
-| `fix: I goed to store` | 小改进式纠错：先给 **Little better** |
-| `polish: Thanks for your help` | 先 Little better，再给更自然版本 |
+在消息开头加一个前缀：
 
-## 显式前缀优先
+- `en: 你好` → 翻成自然英文
+- `zh: Hello` → 翻成简体中文
+- `word: agent` → 单词卡：意思、音标、例句、音频/图片/视频
+- `words: paste a paragraph` → 从一段英文里挑重点词
+- `say: I worked it out` → 发音练习
+- `fix: I goed to store` → 小幅纠错
+- `polish: Thanks for your help` → 改得更自然
 
-如果一句话以 `polish:`、`fix:`、`word:`、`say:`、`en:`、`zh:` 等前缀开头，English Coach 会把冒号后面的内容当作学习材料处理，不会把它当成技术问题来回答。
+前缀优先。比如 `fix: ...` 一定会当作英文纠错处理。
 
-```text
-polish: what's the current config's max_turns and approvals.mode
-```
+## 媒体
 
-这会触发润色，而不是去查询 Hermes 配置。想问技术问题时，不要加 English Coach 前缀。
+`word:` 会先给文字卡。
 
-## `fix:` / `polish:` 的 Little better
+如果工具可用，Hermes 还会生成：
 
-**Little better** = 小改原句，让它更正确、更清楚，但尽量保留用户自己的表达。
+- 音频
+- 图片
+- 短视频
 
-- `fix:` 默认先给 **Little better**：修明显错误，不急着改成完美母语句。
-- `polish:` 先给 **Little better**，再给 **More natural** / **Best version**。
-- 目的：让学习者更容易看懂「改了哪里」，从小变化里学会表达。
+没有图片生成也能用；只会少图片和视频。
 
-```text
-fix: I call it "little better", changing theoriginal a little so that users can much easier to grasp.
-```
+## 图片生成（可选）
 
-```text
-Little better:
-I call it "a little better": changing the original a little so users can grasp it much more easily.
+如果图片生成已经能用，不需要改设置。
 
-More natural:
-I call it “a little better”: a small change to the original that makes it much easier for learners to understand.
+如果还没配置，并且你想用 Codex 生成图片：
+
+```bash
+hermes tools enable image_gen
+hermes login --provider openai-codex
+hermes config set image_gen.provider openai-codex
+hermes config set image_gen.model gpt-image-2-low
 ```

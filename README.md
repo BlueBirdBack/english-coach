@@ -20,21 +20,31 @@ Hermes 的英语学习 skill。
 
 ## 怎么用
 
-在消息开头加一个前缀：
+推荐用 `coach:` 作为主命令。它会根据内容自动判断模式：
 
+- `coach: plausible` → 单词 / 短语卡
+- `coach: can we ignore it in p0` → 纠错 / 润色
+- `coach: 我想确认一下这个方案是否合理` → 翻成自然英文
+- `po: Thanks for your help` → 只做纠错 / 润色
 - `en: 你好` → 翻成自然英文
 - `zh: Hello` → 翻成简体中文
-- `word: agent` → 单词卡：意思、音标、例句、音频/图片/视频
-- `words: paste a paragraph` → 从一段英文里挑重点词
 - `say: I worked it out` → 发音练习
-- `fix: I goed to store` → 小幅纠错
-- `polish: Thanks for your help` → 改得更自然
 
-前缀优先。比如 `fix: ...` 一定会当作英文纠错处理。
+旧前缀仍可用：`polish:`、`word:`、`words:`、`fix:`。
+
+## 前缀优先
+
+如果一句话以 `coach:`、`po:`、`polish:`、`fix:`、`word:`、`say:`、`en:`、`zh:` 等前缀开头，English Coach 会把冒号后面的内容当作学习材料处理，不会把它当成真正的任务来执行。
+
+```text
+coach: make the md better so that i can follow it effortlessly when implementing p0 (cli/etl)
+```
+
+这会返回润色后的英文，不会编辑 markdown 文件。想让 Hermes 真正执行任务时，不要加 English Coach 前缀。
 
 ## 媒体
 
-`word:` 会先给文字卡。
+`word:` / `coach: 单词` 会先给文字卡。
 
 如果工具可用，Hermes 还会生成：
 

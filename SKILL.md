@@ -1,6 +1,6 @@
 ---
 name: english-coach
-description: "English Coach: English learning coach for translation, word cards, pronunciation, correction, polishing, optional audio, flashcard images, and word-card videos. Primary triggers: en: zh: word: words: say: fix: polish:. Also supports: idiom: collocation: speak: shadow: correct: proofread:."
+description: "English Coach: English learning coach for translation, word cards, pronunciation, correction, polishing, optional audio, flashcard images, and word-card videos. Primary triggers: coach: po: en: zh: say:. Legacy triggers still supported: polish: word: words: fix: correct: proofread:."
 author: "Rac 🦝"
 ---
 
@@ -23,10 +23,19 @@ Built by Rac 🦝 from reusable English-learning GPTs created by BlueBirdBack (B
 ## Mode priority
 
 Strict prefix routing:
+- `coach:` is the recommended smart English Coach command. It decides the mode from the payload.
+- `po:` is the recommended short alias for polish/correction only.
 - If the user message begins with an English Coach trigger followed by `:`, that trigger wins over semantic/domain routing.
-- Treat everything after the first colon as the payload for that mode. The payload can be text, an attached image, or replied-to content; use text directly, and use image/attachment content when the platform provides it.
+- Treat everything after the first colon as the payload for English learning, even if it mentions config, code, commands, GitHub, tools, URLs, markdown files, or looks like a technical task. The payload can be text, an attached image, or replied-to content; use text directly, and use image/attachment content when the platform provides it.
 - If the trigger payload is empty in a messaging reply context, use the replied-to message as the payload instead of asking for clarification. If the replied-to message contains an image or attachment, analyze/use that media when the mode supports it; otherwise ask one focused clarification.
-- Apply this rule to primary and alias triggers, including `polish:`, `fix:`, `correct:`, `proofread:`, `say:`, `pronounce:`, `shadow:`, `speak:`, `word:`, `words:`, `en:`, and `zh:`.
+- Do not edit files, run commands, browse the web, or answer the payload as the actual task unless the user asks again without an English Coach trigger.
+- Apply this rule to primary and alias triggers, including `coach:`, `po:`, `polish:`, `fix:`, `correct:`, `proofread:`, `say:`, `pronounce:`, `shadow:`, `speak:`, `word:`, `words:`, `en:`, and `zh:`.
+
+`coach:` smart routing:
+- One word or short phrase → word/phrase card.
+- A sentence or short message → correction/polish.
+- A longer paragraph → extract useful words, unless the user asks to rewrite/correct it.
+- Chinese text → translate to natural English, unless correction/polish is requested.
 
 If one request could fit multiple modes after prefix routing, choose the highest-priority mode:
 
@@ -145,6 +154,7 @@ For speaking practice, give one compact drill:
 ## Correction / Polish
 
 Triggers:
+- `po:`
 - `correct:`
 - `fix:`
 - `proofread:`
@@ -159,7 +169,7 @@ Little better principle:
 - Preserve the user's wording, style, tone, and sentence shape unless they block correctness.
 - Do not jump straight to a perfect native rewrite when the learner needs to see the small delta.
 - For `fix:`, **Little better** is the default answer.
-- For `polish:`, show **Little better** first, then a stronger **More natural** or **Best version** when useful.
+- For `po:` and `polish:`, show **Little better** first, then a stronger **More natural** or **Best version** when useful.
 
 Output:
 - **Verdict:** ✅ correct & natural / ⚠️ grammar issue / ⚠️ unnatural / ❌ both
@@ -201,12 +211,15 @@ What to read aloud:
 
 | Request | Result |
 |---|---|
+| `coach: plausible` | Smart mode: word card |
+| `coach: i need check this first` | Smart mode: correction/polish |
+| `po: Thanks for your help` | Polish/correction only |
 | `zh: Hello there` | EN→ZH translation |
 | `en: 你好` | ZH→EN natural English |
 | `word: resilience` | CEFR + IPA + examples |
 | `words: [paragraph]` | Living Vocab list |
 | `say: I worked it out` | stress/rhythm/shadowing |
 | `fix: I goed to store` | Little better correction that stays close to the original |
-| `polish: Thanks for your help` | Little better + more natural tone-matched rewrite |
+| `polish: Thanks for your help` | Legacy alias: Little better + more natural tone-matched rewrite |
 
 Audio is default in Hermes when available; text-only fallback is valid in public/non-Hermes installs.

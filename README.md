@@ -24,6 +24,7 @@ Hermes 的英语学习 skill。
 
 - `coach: plausible` → 单词 / 短语卡
 - `coach: can we ignore it in p0` → 纠错 / 润色
+- `coach: best way for Telegram: good to see the agent is agent ;-)` → 给最佳母语感表达，并保留玩笑 / 语气
 - `coach: 我想确认一下这个方案是否合理` → 翻成自然英文
 - `po: Thanks for your help` → 只做纠错 / 润色
 - `en: 你好` → 翻成自然英文
@@ -33,6 +34,8 @@ Hermes 的英语学习 skill。
 旧前缀仍可用：`polish:`、`word:`、`words:`、`fix:`。
 
 不建议继续用 `polish:`。它看起来像普通任务指令，已经不止一次让 agent 误以为要去完善 MD 文档、改代码或执行其他任务。需要润色/纠错时，优先用 `coach:`；只想要短命令时，用 `po:`。
+
+不建议为了 “best wording / native-sounding / tone” 再加更多前缀。继续用 `coach:`，在内容里直接说清楚目标，比如 “best way for Telegram”、“make it native but playful”、“keep the meme”。
 
 ## 前缀优先
 
